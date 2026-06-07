@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleKeyGenerator;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class UserService {
     private UserRepository userRepository;
 
     // Key is SpEL
-    @Cacheable(cacheNames = "user", key = "#userId")
+    @Cacheable(cacheNames = "user", /*key = "#userId",*/ keyGenerator = "customerKeyGeneratorConfig")
     public UserEntity getUserEntityById(Integer userId){
         return this.userRepository.findById(userId).orElse(null);
     }
