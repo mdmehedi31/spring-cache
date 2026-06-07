@@ -21,9 +21,9 @@ public class SpringCacheApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-       System.out.println(userService.getUserEntityById(1));
+      /* System.out.println(userService.getUserEntityById(1));
         System.out.println(userService.getUserEntityById(1));
         System.out.println(userService.getUserEntityById(2));
-        System.out.println(userService.getUserEntityById(1));
+        System.out.println(userService.getUserEntityById(1));*/
     }
 }
