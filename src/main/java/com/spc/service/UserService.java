@@ -1,8 +1,12 @@
 package com.spc.service;
 
+import com.spc.cachekey.MyKey;
 import com.spc.entity.UserEntity;
 import com.spc.entity.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
@@ -36,6 +40,7 @@ class cacheLogic{
 @EnableCaching
 public class UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -49,6 +54,17 @@ public class UserService {
     }
 
 
+    @Cacheable(cacheNames = "userEmailCh", keyGenerator = "customerKeyGeneratorConfig")
+    public UserEntity getUserEntityByEmail(MyKey myKey) {
+        log.info("Get user by email: " + myKey.getEmail());
+
+        return this.userRepository.findByEmail(myKey.getEmail());
+    }
+
+
+    public UserEntity getByEmail(String email) {
+        return this.getUserEntityByEmail(new MyKey(email));
+    }
     /* If we use the parameter of then the condition format should be like --> #parameterValue, 1st method below .
        But if we generate the cache login by using the condition and user different class
        then we need to use this format @className.methodName 2nd method below

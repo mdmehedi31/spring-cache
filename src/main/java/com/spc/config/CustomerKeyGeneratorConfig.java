@@ -1,5 +1,6 @@
 package com.spc.config;
 
+import com.spc.cachekey.MyKey;
 import org.jspecify.annotations.Nullable;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.stereotype.Component;
@@ -19,10 +20,17 @@ public class CustomerKeyGeneratorConfig implements KeyGenerator {
             return EMPTY_KEY;
         }
 
-     /*   if(params.length == 1) {
+        if(params.length == 1) {
+
+            Class<?> type = params[0].getClass();
+            if (type== MyKey.class) {
+
+
+            }
+
             return params[0];
         }
-*/
+
         return Arrays.deepHashCode(params);
     }
 }

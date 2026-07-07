@@ -1,8 +1,11 @@
 package com.spc.controller;
 
 
+import com.spc.cachekey.MyKey;
 import com.spc.entity.UserEntity;
 import com.spc.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -27,6 +30,18 @@ public class UserController {
     public List<UserEntity> getAllUsersByType(@RequestParam String userType) {
         this.userService.setUserEntity(userType);
         return this.userService.getAllUserEntity();
+    }
+
+
+    @GetMapping("get-by-email")
+    public UserEntity getUserEntityByEmail(@RequestParam String email) {
+        log.info(" Controller 1");
+
+        this.userService.getUserEntityByEmail(new MyKey(email));
+        log.info(" Controller 2");
+        this.userService.getUserEntityByEmail(new MyKey(email));
+        log.info(" Controller 3");
+        return this.userService.getUserEntityByEmail(new MyKey(email));
     }
 }
 
