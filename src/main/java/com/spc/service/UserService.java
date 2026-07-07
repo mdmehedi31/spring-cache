@@ -63,7 +63,7 @@ public class UserService {
 
 
     public UserEntity getByEmail(String email) {
-        return this.getUserEntityByEmail(new MyKey(email));
+        return null; //this.getUserEntityByEmail(new MyKey(email));
     }
     /* If we use the parameter of then the condition format should be like --> #parameterValue, 1st method below .
        But if we generate the cache login by using the condition and user different class
