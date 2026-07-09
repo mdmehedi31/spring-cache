@@ -37,11 +37,14 @@ public class UserController {
     public UserEntity getUserEntityByEmail(@RequestParam String email) {
         log.info(" Controller 1");
 
-        this.userService.getUserEntityByEmail(new MyKey(email));
+        this.userService.getUserEntityByEmail(email);
         log.info(" Controller 2");
-        this.userService.getUserEntityByEmail(new MyKey(email));
-        log.info(" Controller 3");
-        return this.userService.getUserEntityByEmail(new MyKey(email));
+        this.userService.getUserEntityByEmail(email);
+        log.info(" Fetch by email call");
+        this.userService.fetchUserByEmail(email);
+        log.info(" Fetch by email call again");
+        this.userService.fetchUserByEmail(email);
+        return this.userService.getUserEntityByEmail(email);
     }
 }
 

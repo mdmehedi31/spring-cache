@@ -54,13 +54,18 @@ public class UserService {
     }
 
 
-    @Cacheable(cacheNames = "userEmailCh", keyGenerator = "customerKeyGeneratorConfig")
-    public UserEntity getUserEntityByEmail(MyKey myKey) {
-        log.info("Get user by email: " + myKey.getEmail());
+    @Cacheable(cacheNames = "userEmailCh", key="#email" ,cacheManager = "caffeineCacheManager"/* keyGenerator = "customerKeyGeneratorConfig"*/)
+    public UserEntity getUserEntityByEmail(String  email) {
+        log.info("Get user by email: " + email);
 
-        return this.userRepository.findByEmail(myKey.getEmail());
+        return this.userRepository.findByEmail(email);
     }
 
+    @Cacheable(cacheNames = "user", key = "#emil",cacheManager = "redisCacheManager")
+    public UserEntity fetchUserByEmail(String emil) {
+        log.info("Fetch user by email: " + emil);
+        return this.userRepository.findByEmail(emil);
+    }
 
     public UserEntity getByEmail(String email) {
         return null; //this.getUserEntityByEmail(new MyKey(email));
